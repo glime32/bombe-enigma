@@ -212,19 +212,20 @@ def propage(M, aretes, perms, test):
 MAX_ARRETS = 5000  # par ordre de rotors ; au-delà, le menu ne trie plus rien
 
 
-def bombe_un_ordre(args):
+def bombe_un_ordre(args, positions=None):
     """Fait tourner la bombe pour un ordre de rotors, sur les 17 576 positions
-    de départ et pour chaque instant possible où le rotor du milieu avance
-    pendant le crib. Renvoie les arrêts qui résistent à la vérification."""
+    de départ (ou seulement celles de `positions`, pour les tests) et pour
+    chaque instant possible où le rotor du milieu avance pendant le crib.
+    Renvoie les arrêts qui résistent à la vérification."""
     ordre, reflecteur, aretes, n = args
     S = table_brouilleur(ordre, reflecteur)
-    idx = np.arange(26 ** 3)
+    idx = np.arange(26 ** 3) if positions is None else np.asarray(positions)
     G, M_, D = idx // 676, (idx // 26) % 26, idx % 26
     test = analyse_menu(aretes)[0]
     arrets = []
     for j in range(n):  # le rotor du milieu avance après la lettre j du crib (j = n-1 : pas pendant le crib)
         perms = {i: S[G, (M_ + (i > j)) % 26, (D + i) % 26] for a, b, i in aretes}
-        M = np.zeros((26 ** 3, 26, 26), dtype=bool)
+        M = np.zeros((len(idx), 26, 26), dtype=bool)
         M[:, test, test] = True  # hypothèse : la lettre test n'a pas de fiche (n'importe laquelle irait)
         M, garde = propage(M, aretes, perms, test)
         # Vérification de tous les arrêts d'un coup : pour chaque arrêt, on

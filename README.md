@@ -32,9 +32,10 @@ python3 bombe.py demo                 # réglage secret au hasard, chiffrement, 
 python3 bombe.py chiffrer --rotors "II IV V" --anneaux "B U L" --positions "L E S" \
         --fiches "AV BS CG DL FU HZ IN KM OW RX" "Bulletin météo"
 python3 bombe.py attaquer --crib BULLETINMETEO message.txt
+python3 tests.py                      # 10 vérifications en une seconde
 ```
 
-Chiffrer et déchiffrer sont la même opération (Enigma est une involution). La machine est vérifiée sur les cas connus : `AAAAA` avec les rotors I-II-III en position AAA donne `BDZGO`, et la séquence `ADU → ADV → AEW → BFX` montre le célèbre « double pas » du rotor du milieu.
+Chiffrer et déchiffrer sont la même opération (Enigma est une involution). La machine est vérifiée sur les cas connus : `AAAAA` avec les rotors I-II-III en position AAA donne `BDZGO`, et la séquence `ADU → ADV → AEW → BFX` montre le célèbre « double pas » du rotor du milieu. `tests.py` déchiffre aussi un vrai message allemand de 1941 (opération Barbarossa), puis fait tourner la bombe sur un seul ordre de rotors et 1 500 positions pour vérifier qu'elle s'arrête au bon endroit.
 
 ## La machine
 
