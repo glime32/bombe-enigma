@@ -277,7 +277,6 @@ def finition(arret, chiffre, crib, k, langue):
     ordre, (dg, dm, dd), j, fiches = arret
     n = len(crib)
     encoches = tuple(ALPHA.index(ROTORS[r][1]) for r in ordre)
-    S = table_brouilleur(ordre)
     P0 = np.arange(26)
     for a, b in fiches:
         P0[a], P0[b] = b, a
